@@ -4,5 +4,10 @@
   "main": "index.js",
   "repository": "https://github.com/theCaptain420/express-apps",
   "author": "mni",
-  "license": "MIT"
+  "license": "MIT",
+  "private": "true",
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "ooga": "yarn workspaces test-project start"
+  }
 }
