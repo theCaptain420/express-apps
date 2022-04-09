@@ -1,0 +1,8 @@
+{
+  "name": "express-apps",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/theCaptain420/express-apps",
+  "author": "mni",
+  "license": "MIT"
+}
