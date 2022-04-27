@@ -17,6 +17,7 @@ class NewsService {
         as: 'writer',
       },
     },
+    // Part of the writer object
     { $unset: 'writer_id' },
   ];
 
