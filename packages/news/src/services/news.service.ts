@@ -2,7 +2,7 @@ import { Article } from '@/interfaces/news.interface';
 import newsModel from '@/models/news.model';
 import { isEmpty } from '@utils/util';
 import { HttpException } from '@exceptions/HttpException';
-
+import { ObjectId } from 'mongodb';
 class NewsService {
   public news = newsModel;
 
@@ -26,10 +26,10 @@ class NewsService {
   public async findArticleById(articleId: string): Promise<Article> {
     if (isEmpty(articleId)) throw new HttpException(400, 'No article_id sent');
 
-    const findArticle: Article = await this.news.findOne({ _id: articleId });
-    const e = await this.news.aggregate([
-      { $addFields: { s_id: { $toObjectId: articleId } } },
-      { $match: { _id: 's_id' } },
+    const object_id = new ObjectId(articleId);
+
+    const e: Article[] = await this.news.aggregate([
+      { $match: { _id: object_id } },
       // Search for objectID and not string
       { $addFields: { writer_id: { $toObjectId: '$writer_id' } } },
       {
@@ -43,10 +43,12 @@ class NewsService {
       { $unset: 'writer_id' },
     ]);
 
-    if (!findArticle)
-      throw new HttpException(409, 'No article found with id: ' + articleId);
+    console.log('ë', e);
 
-    return findArticle;
+    if (!e || e.length === 0) {
+      throw new HttpException(409, 'No article found with id: ' + articleId);
+    }
+    return e[0];
   }
 }
 
