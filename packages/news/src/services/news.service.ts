@@ -7,8 +7,20 @@ class NewsService {
   public news = newsModel;
 
   public async findAllArticles(): Promise<Article[]> {
-    const Articles: Article[] = await this.news.find();
-    return Articles;
+    const articles: Article[] = await this.news.aggregate([
+      // Search for objectID and not string
+      { $addFields: { writer_id: { $toObjectId: '$writer_id' } } },
+      {
+        $lookup: {
+          from: 'writers',
+          localField: 'writer_id',
+          foreignField: '_id',
+          as: 'writer',
+        },
+      },
+      { $unset: 'writer_id' },
+    ]);
+    return articles;
   }
 
   public async findArticleById(articleId: string): Promise<Article> {
