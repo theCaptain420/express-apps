@@ -10,6 +10,10 @@ const writersSchema: Schema = new Schema({
     type: String,
     required: true,
   },
+  password: {
+    type: String,
+    required: true,
+  },
 });
 
 const writersModel = model<Writer & Document>('Writers', writersSchema);

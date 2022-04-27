@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { Routes } from '@interfaces/routes.interface';
 import WritersController from '@/controllers/writers.controller';
+import validationMiddleware from '@/middlewares/validation.middleware';
+import { CreateWriterDto } from '@/dtos/writers.dto';
 
 class WritersRoute implements Routes {
   public path = '/writers';
@@ -13,6 +15,11 @@ class WritersRoute implements Routes {
 
   private initializeRoutes() {
     this.router.get(`${this.path}`, this.writersController.getWriters);
+    this.router.post(
+      `${this.path}`,
+      validationMiddleware(CreateWriterDto, 'body'),
+      this.writersController.createWriter
+    );
   }
 }
 
