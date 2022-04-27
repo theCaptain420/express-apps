@@ -4,6 +4,7 @@ import IndexRoute from '@routes/index.route';
 import UsersRoute from '@routes/users.route';
 import validateEnv from '@utils/validateEnv';
 import NewsRoute from '@routes/news.route';
+import WritersRoute from '@routes/writers.route';
 
 validateEnv();
 
@@ -12,6 +13,7 @@ const app = new App([
   new UsersRoute(),
   new AuthRoute(),
   new NewsRoute(),
+  new WritersRoute(),
 ]);
 
 app.listen();

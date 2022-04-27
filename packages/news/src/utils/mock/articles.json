@@ -1,5 +1,8 @@
-[{
-    "id": "1",
-    "title": "This is my first",
-    "body": "Lmao my dude"
-}]
+[
+  {
+    "title": "Min artikel",
+    "body": "Sikke en historie",
+    "writer_id": 1,
+    "tag_ids": []
+  }
+]

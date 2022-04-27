@@ -5,10 +5,17 @@ const newsSchema: Schema = new Schema({
   title: {
     type: String,
     required: true,
-    unique: true,
   },
   body: {
     type: String,
+    required: true,
+  },
+  writer_id: {
+    type: String,
+    required: true,
+  },
+  tag_ids: {
+    type: [String],
     required: true,
   },
 });
