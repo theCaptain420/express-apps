@@ -15,6 +15,22 @@ class NewsController {
       next(error);
     }
   };
+
+  public getNewsById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const articleId: string = req.params.id;
+      const findOneArticleData: Article =
+        await this.newsService.findArticleById(articleId);
+
+      res.status(200).json({ data: findOneArticleData, message: 'findOne' });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default NewsController;

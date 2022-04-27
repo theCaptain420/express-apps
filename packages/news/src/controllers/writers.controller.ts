@@ -14,7 +14,9 @@ class WritersController {
       const findAllWritersData: Writer[] =
         await this.writersService.findAllWriters();
 
-      res.status(200).json({ data: findAllWritersData, message: 'findAll' });
+      res
+        .status(200)
+        .json({ data: findAllWritersData, message: 'List all writers' });
     } catch (error) {
       next(error);
     }
