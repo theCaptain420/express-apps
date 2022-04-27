@@ -27,6 +27,22 @@ class NewsService {
     if (isEmpty(articleId)) throw new HttpException(400, 'No article_id sent');
 
     const findArticle: Article = await this.news.findOne({ _id: articleId });
+    const e = await this.news.aggregate([
+      { $addFields: { s_id: { $toObjectId: articleId } } },
+      { $match: { _id: 's_id' } },
+      // Search for objectID and not string
+      { $addFields: { writer_id: { $toObjectId: '$writer_id' } } },
+      {
+        $lookup: {
+          from: 'writers',
+          localField: 'writer_id',
+          foreignField: '_id',
+          as: 'writer',
+        },
+      },
+      { $unset: 'writer_id' },
+    ]);
+
     if (!findArticle)
       throw new HttpException(409, 'No article found with id: ' + articleId);
 
