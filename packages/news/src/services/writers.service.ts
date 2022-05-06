@@ -27,10 +27,8 @@ class WritersService {
         `Your email ${writerData.email} already exists`
       );
 
-    const hashedPassword = await hash(writerData.password, 10);
     const createUserData: Writer = await this.writers.create({
       ...writerData,
-      password: hashedPassword,
     });
 
     return createUserData;

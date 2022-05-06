@@ -5,8 +5,5 @@ export class CreateWriterDto {
   public email: string;
 
   @IsString()
-  public password: string;
-
-  @IsString()
   public name: string;
 }
