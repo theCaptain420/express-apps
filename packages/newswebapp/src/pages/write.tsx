@@ -6,18 +6,29 @@ interface Article {
 }
 
 function Write() {
-  const [writers, setWriters] = useState([]);
   const createArticle = useCallback(() => {
-    fetch("http://localhost:3000/news")
+      const data: Article = { title: };
+    fetch("http://localhost:3000/news",{
+        method: 'POST', 
+        
+        cache: 'no-cache',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify(data)
+      })
       .then((res) => res.json())
       .then((data) => console.log(data.data))
       .catch((err) => console.warn(err));
   }, []);
 
+  const [writers, setWriters] = useState([]);
   useEffect(() => {
     fetch("http://localhost:3000/writers")
       .then((res) => res.json())
-      .then((data) => console.log(data.data))
+      .then((data) => setWriters(data.data))
       .catch((err) => console.warn(err));
   }, []);
 
