@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-
-interface Article {
-  title: string;
-  body: string;
-}
+import { DisplayArticle } from "./types";
 
 function News() {
   const [news, setNews] = useState([]);
@@ -17,10 +13,11 @@ function News() {
   return (
     <div>
       <h1>WE ARE HERE</h1>
-      {news.map((article: Article) => (
+      {news.map((article: DisplayArticle) => (
         <div>
           <h3>{article.title}</h3>
           <p>{article.body}</p>
+          <p>Written by: {article.writer?.name}</p>
         </div>
       ))}
     </div>

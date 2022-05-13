@@ -14,6 +14,7 @@ class NewsRoute implements Routes {
   private initializeRoutes() {
     this.router.get(`${this.path}`, this.newsController.getNews);
     this.router.get(`${this.path}/:id`, this.newsController.getNewsById);
+    this.router.post(`${this.path}`, this.newsController.createNews);
   }
 }
 

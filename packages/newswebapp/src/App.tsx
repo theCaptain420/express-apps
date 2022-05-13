@@ -10,6 +10,11 @@ function App() {
       <div className="App">
         <h1>News</h1>
       </div>
+      <a href="/" style={{ marginRight: 20 }}>
+        Home
+      </a>
+
+      <a href="/write">Create article</a>
 
       <BrowserRouter>
         <Routes>

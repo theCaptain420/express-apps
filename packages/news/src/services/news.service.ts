@@ -3,6 +3,7 @@ import newsModel from '@/models/news.model';
 import { isEmpty } from '@utils/util';
 import { HttpException } from '@exceptions/HttpException';
 import { ObjectId } from 'mongodb';
+import { CreateNewsDto } from '@/dtos/news.dto';
 class NewsService {
   public news = newsModel;
 
@@ -19,6 +20,9 @@ class NewsService {
     },
     // Part of the writer object
     { $unset: 'writer_id' },
+    {
+      $unwind: '$writer', // this to convert the array of one object to be an object
+    },
   ];
 
   public async findAllArticles(): Promise<Article[]> {
@@ -42,6 +46,15 @@ class NewsService {
       throw new HttpException(409, 'No article found with id: ' + articleId);
     }
     return foundArticle[0];
+  }
+
+  public async createArticle(arData: CreateNewsDto): Promise<Article> {
+    if (isEmpty(arData))
+      throw new HttpException(400, "You're not article data");
+
+    const createArticleData: Article = await this.news.create(arData);
+
+    return createArticleData;
   }
 }
 
