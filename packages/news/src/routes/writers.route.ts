@@ -15,6 +15,7 @@ class WritersRoute implements Routes {
 
   private initializeRoutes() {
     this.router.get(`${this.path}`, this.writersController.getWriters);
+    this.router.get(`${this.path}/:id`, this.writersController.getNewsByWriter);
     this.router.post(
       `${this.path}`,
       validationMiddleware(CreateWriterDto, 'body'),

@@ -1,9 +1,9 @@
-import { Writer } from '@interfaces/writer.interface';
+import { ExtendedWriter, Writer } from '@interfaces/writer.interface';
 import WritersModel from '@/models/writer.model';
 import { CreateWriterDto } from '@dtos/writers.dto';
 import { isEmpty } from '@/utils/util';
-import { hash } from 'bcrypt';
 import { HttpException } from '@exceptions/HttpException';
+import { ObjectId } from 'mongodb';
 
 class WritersService {
   public writers = WritersModel;
@@ -32,6 +32,34 @@ class WritersService {
     });
 
     return createUserData;
+  }
+
+  public async findArticlesByWriterId(
+    writerId: string
+  ): Promise<ExtendedWriter> {
+    if (isEmpty(writerId)) throw new HttpException(400, 'No writer_id sent');
+
+    const object_id = new ObjectId(writerId);
+
+    const foundWriter: ExtendedWriter[] = await this.writers.aggregate([
+      { $match: { _id: object_id } },
+      // Search for objectID and not string
+      { $addFields: { writer_id: { $toString: '$_id' } } },
+      {
+        $lookup: {
+          from: 'news',
+          localField: 'writer_id',
+          foreignField: 'writer_id',
+          as: 'articles',
+        },
+      },
+      { $unset: 'writer_id' },
+    ]);
+    console.log(foundWriter);
+    if (!foundWriter || foundWriter.length === 0) {
+      throw new HttpException(409, 'No writer found with id: ' + writerId);
+    }
+    return foundWriter[0];
   }
 }
 

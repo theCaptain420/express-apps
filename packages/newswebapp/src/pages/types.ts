@@ -4,6 +4,13 @@ export interface Writer {
   name: string;
 }
 
+export interface ExtendedWriter {
+  _id: string;
+  email: string;
+  name: string;
+  articles: DataArticle[];
+}
+
 export interface DisplayArticle {
   title: string;
   body: string;

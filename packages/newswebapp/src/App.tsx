@@ -1,8 +1,9 @@
 import React from "react";
 import "./App.css";
 import News from "./pages/news";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import Write from "./pages/write";
+import Writer from "./pages/writer";
 
 function App() {
   return (
@@ -10,18 +11,15 @@ function App() {
       <div className="App">
         <h1>News</h1>
       </div>
-      <a href="/" style={{ marginRight: 20 }}>
-        Home
-      </a>
+      <nav>
+        <Link to="/">Home</Link> | <Link to="/write">Create article</Link>
+      </nav>
 
-      <a href="/write">Create article</a>
-
-      <BrowserRouter>
-        <Routes>
-          <Route path="/write" element={<Write />} />
-          <Route path="/" element={<News />} />
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route path="/writer/:id" element={<Writer />} />
+        <Route path="/write" element={<Write />} />
+        <Route path="/" element={<News />} />
+      </Routes>
     </>
   );
 }

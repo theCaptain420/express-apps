@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { DisplayArticle } from "./types";
 
 function News() {
+  let navigate = useNavigate();
+
   const [news, setNews] = useState([]);
   useEffect(() => {
     fetch("http://localhost:3000/news")
@@ -12,12 +15,20 @@ function News() {
 
   return (
     <div>
-      <h1>WE ARE HERE</h1>
+      <h1>Current News</h1>
       {news.map((article: DisplayArticle) => (
         <div>
           <h3>{article.title}</h3>
           <p>{article.body}</p>
-          <p>Written by: {article.writer?.name}</p>
+          <p>
+            Written by:{" "}
+            <button
+              style={{ all: "unset", cursor: "pointer", color: "blue" }}
+              onClick={() => navigate(`/writer/${article.writer?._id}`)}
+            >
+              {article.writer?.name}
+            </button>
+          </p>
         </div>
       ))}
     </div>

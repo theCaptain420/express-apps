@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { Writer } from '@interfaces/writer.interface';
+import { ExtendedWriter, Writer } from '@interfaces/writer.interface';
 import WritersService from '@services/writers.service';
 import { CreateWriterDto } from '@/dtos/writers.dto';
 
@@ -18,6 +18,22 @@ class WritersController {
       res
         .status(200)
         .json({ data: findAllWritersData, message: 'List all writers' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getNewsByWriter = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const writerId: string = req.params.id;
+      const findArticleData: ExtendedWriter =
+        await this.writersService.findArticlesByWriterId(writerId);
+
+      res.status(200).json({ data: findArticleData, message: 'findOne' });
     } catch (error) {
       next(error);
     }

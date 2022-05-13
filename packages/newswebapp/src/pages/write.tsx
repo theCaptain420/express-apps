@@ -39,7 +39,7 @@ function Write() {
       .then((res) => res.json())
       .then((data) => console.log("article created!", data.data))
       .catch((err) => console.warn(err));
-  }, [selectedWriterID, title, body]);
+  }, [selectedWriterID, title, body, writers]);
 
   useEffect(() => {
     fetch("http://localhost:3000/writers")
