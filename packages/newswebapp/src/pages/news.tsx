@@ -18,6 +18,7 @@ function News() {
       <h1>Current News</h1>
       {news.map((article: DisplayArticle) => (
         <div>
+          <p>-------</p>
           <h3>{article.title}</h3>
           <p>{article.body}</p>
           <p>

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { Routes } from '@interfaces/routes.interface';
 import NewsController from '@/controllers/news.controller';
+import authMiddleware from '@/middlewares/auth.middleware';
 
 class NewsRoute implements Routes {
   public path = '/news';
@@ -14,7 +15,11 @@ class NewsRoute implements Routes {
   private initializeRoutes() {
     this.router.get(`${this.path}`, this.newsController.getNews);
     this.router.get(`${this.path}/:id`, this.newsController.getNewsById);
-    this.router.post(`${this.path}`, this.newsController.createNews);
+    this.router.post(
+      `${this.path}`,
+      authMiddleware,
+      this.newsController.createNews
+    );
   }
 }
 
